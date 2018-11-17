@@ -19,6 +19,7 @@
 					<Add library="libGL" />
 					<Add library="libGLU" />
 					<Add library="libglut" />
+					<Add library="libSOIL" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -37,17 +38,22 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="core/texture2d.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="core/vector.cpp" />
 		<Unit filename="core/vector.h" />
 		<Unit filename="game/objectInclude.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="game/player.h" />
+		<Unit filename="gameCore/eventHandler.cpp" />
+		<Unit filename="gameCore/eventHandler.h" />
 		<Unit filename="gameCore/gameEvent.h" />
 		<Unit filename="gameCore/gameObject.cpp" />
 		<Unit filename="gameCore/gameObject.h" />
-		<Unit filename="gameCore/graphics.cpp" />
-		<Unit filename="gameCore/graphics.h" />
+		<Unit filename="gameCore/resourceLoader.cpp" />
+		<Unit filename="gameCore/resourceLoader.h" />
 		<Unit filename="gameCore/updater.cpp" />
 		<Unit filename="gameCore/updater.h" />
 		<Unit filename="main.cpp" />

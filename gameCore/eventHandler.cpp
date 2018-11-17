@@ -35,16 +35,45 @@ void EventHandler::runGame()
 }
 
 #include "../game/player.h"
+#include "resourceLoader.h"
+
+Texture2D* tex;
 
 void EventHandler::init(int argc, char **argv, Vector2i winSize, Vector2i winPos, std::string title)
 {
     Player* player = new Player();
     Updater::registerInstance((GameObject*)player);
     player->onLoad();
-
     glutInit(&argc, argv);
     EventHandler::initGraphics(title, winSize, winPos);
     EventHandler::initEvents();
+
+    tex = ResourceLoader::loadTexture("input.png");
+    //match projection to window resolution (could be in reshape callback)
+    glMatrixMode(GL_PROJECTION);
+    glOrtho(0, glutGet(GLUT_SCREEN_WIDTH), 0, glutGet(GLUT_SCREEN_HEIGHT), -1, 1);
+    glMatrixMode(GL_MODELVIEW);
+
+}
+
+
+void DrawImage(void) {
+
+    //clear and draw quad with texture (could be in display callback)
+    glClear(GL_COLOR_BUFFER_BIT);
+    glBindTexture(GL_TEXTURE_2D, tex->textureId);
+    glEnable(GL_TEXTURE_2D);
+
+    glBegin(GL_QUADS);
+        glTexCoord2i(0, 0); glVertex2i(100, 100);
+        glTexCoord2i(0, 1); glVertex2i(100, 500);
+        glTexCoord2i(1, 1); glVertex2i(500, 500);
+        glTexCoord2i(1, 0); glVertex2i(500, 100);
+    glEnd();
+
+    glDisable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glFlush(); //don't need this with GLUT_DOUBLE and glutSwapBuffers
 }
 
 void EventHandler::eventKeyDown(int key, int x, int y)
@@ -128,8 +157,9 @@ void EventHandler::loop()
 {
     Updater::tickBegin();
 
-    Updater::tick();
-    Updater::redraw();
+    //Updater::tick();
+    //Updater::redraw();
+    DrawImage();
 
     Updater::tickEnd();
 }
