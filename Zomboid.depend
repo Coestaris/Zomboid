@@ -36,7 +36,7 @@
 	"gameCore/updater.h"
 	<stdio.h>
 
-1542465973 source:/home/maxim/Coding/Zomboid/gameCore/updater.cpp
+1542471973 source:/home/maxim/Coding/Zomboid/gameCore/updater.cpp
 	"updater.h"
 
 1542465973 /home/maxim/Coding/Zomboid/gameCore/updater.h
@@ -48,19 +48,19 @@
 	"GL/gl.h"
 	"gameObject.h"
 
-1542459904 /home/maxim/Coding/Zomboid/gameCore/gameObject.h
+1542472591 /home/maxim/Coding/Zomboid/gameCore/gameObject.h
 	<vector>
 	"../core/vector.h"
 	"gameEvent.h"
 
-1542465151 /home/maxim/Coding/Zomboid/gameCore/gameEvent.h
+1542472320 /home/maxim/Coding/Zomboid/gameCore/gameEvent.h
 	"GL/freeglut.h"
 
-1542465813 source:/home/maxim/Coding/Zomboid/gameCore/graphics.cpp
+1542472339 source:/home/maxim/Coding/Zomboid/gameCore/graphics.cpp
 	"graphics.h"
 	"../game/player.h"
 
-1542464967 /home/maxim/Coding/Zomboid/gameCore/graphics.h
+1542472126 /home/maxim/Coding/Zomboid/gameCore/graphics.h
 	<string>
 	<malloc.h>
 	"GL/freeglut.h"
@@ -68,7 +68,7 @@
 	"../core/vector.h"
 	"updater.h"
 
-1542466090 /home/maxim/Coding/Zomboid/game/player.h
+1542472430 /home/maxim/Coding/Zomboid/game/player.h
 	"objectInclude.h"
 
 1542465338 /home/maxim/Coding/Zomboid/game/objectInclude.h
@@ -76,4 +76,16 @@
 	"../gameCore/gameObject.h"
 	"../gameCore/updater.h"
 	"../gameCore/gameEvent.h"
+
+1542472734 source:/home/maxim/Coding/Zomboid/gameCore/eventHandler.cpp
+	"eventHandler.h"
+	"../game/player.h"
+
+1542472752 /home/maxim/Coding/Zomboid/gameCore/eventHandler.h
+	<string>
+	<malloc.h>
+	"GL/freeglut.h"
+	"GL/gl.h"
+	"../core/vector.h"
+	"updater.h"
 

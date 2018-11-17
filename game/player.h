@@ -11,24 +11,15 @@ public:
 
     void onLoad() override {
         std::cout << "Player Inited\n";
-        Updater::subscribeEvent(EventType::Update, this);
-        Updater::subscribeEvent(EventType::KeyUp, this);
-        Updater::subscribeEvent(EventType::KeyPressed, this);
+        Updater::subscribeEvent(EventType::MouseMove, this);
     }
 
     void eventHandler(GameEvent event) override {
-        if(event.eventType == EventType::Update) {
-            std::cout << "\n";
-        } else
+        if(event.eventType == EventType::MouseMove) {
 
-        if(event.eventType == EventType::KeyUp || event.eventType == EventType::KeyPressed) {
+            MouseEventData* med = (MouseEventData*)event.eventData;
+            std::cout << "X: " << med->x << ", Y: " << med->y << "\n";
 
-            KeyEventData* ked = (KeyEventData*)event.eventData;
-            if(ked->charKey != NULL_CHARKEY) {
-                std::cout << "Pressed key is: " << ked->charKey << "\n";
-            } else {
-                std::cout << "Pressed key is special symbol\n";
-            }
         }
     }
 };

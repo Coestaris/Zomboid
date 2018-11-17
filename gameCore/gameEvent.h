@@ -5,11 +5,14 @@
 
 #define NULL_CHARKEY '\0'
 #define NULL_KEY -1
+#define NULL_BUTTON -1
+#define NULL_STATE -1
+#define NULL_COORD -1
 
 enum class EventType : int {
     Update = 0,
 
-    KeyPressed = 1,
+    KeyDown = 1,
     KeyUp = 2,
     MouseClick = 3,
     MouseMove = 4,

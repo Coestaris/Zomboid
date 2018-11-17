@@ -10,12 +10,12 @@
 #include "../core/vector.h"
 #include "updater.h"
 
-class Graphics
+class EventHandler
 {
 private:
     static void loop();
-    static void eventPressedKey(int key, int x, int y);
-    static void eventPressedCharKey(unsigned char key, int x, int y);
+    static void eventKeyDown(int key, int x, int y);
+    static void eventCharKeyDown(unsigned char key, int x, int y);
     static void eventKeyCharUp(unsigned char key, int x, int y);
     static void eventKeyUp(int key, int x, int y);
     static void eventMouseClick(int button, int state, int x, int y);
@@ -28,6 +28,7 @@ private:
 
 public:
     static void init(int argc, char **argv, Vector2i winSize, Vector2i winPos, std::string title);
+    static void runGame();
 };
 
 

@@ -24,13 +24,15 @@ protected:
 public:
     ouid_t ouid;
 
-    Vector2f postition;
-    double angle;
-
     void destroyInstance();
 
     virtual void eventHandler(GameEvent event) {}
     virtual void draw() {}
+};
+
+class DrawableObject : public GameObject
+{
+
 };
 
 #endif // GAMEOBJECT_H_INCLUDED

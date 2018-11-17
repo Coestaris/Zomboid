@@ -5,7 +5,7 @@
 
 #include "game/player.h"
 
-#include "gameCore/graphics.h"
+#include "gameCore/eventHandler.h"
 #include "gameCore/updater.h"
 
 #include <stdio.h>

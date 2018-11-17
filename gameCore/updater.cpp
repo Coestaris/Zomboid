@@ -77,7 +77,7 @@ void Updater::tickEnd()
     if(Updater::delayCounter >= mili_fps_av) {
 
         Updater::FPS = 1000.0 * (double)Updater::framesCounter / (double)Updater::delayCounter.count();
-        //std::cout << "FPS:" << Updater::FPS << "\n";
+        std::cout << "FPS:" << Updater::FPS << "\n";
 
         Updater::framesCounter = 0;
         Updater::delayCounter = mili_zero;
