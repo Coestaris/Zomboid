@@ -34,8 +34,9 @@ private:
     static milliseconds delayCounter;
     #endif // CALCULATE_FPS
 
-    static void raiseEvent(int eventType, void* data);
 public:
+    static void raiseEvent(EventType eventType, void* data);
+
     static void init();
 
     static void tick();
@@ -44,7 +45,7 @@ public:
 
     static void redraw();
 
-    static void subscibeEvent(int eventType, GameObject* object);
+    static void subscribeEvent(EventType eventType, GameObject* object);
 
     static void registerInstance(GameObject* object);
     static void destroyInstance(ouid_t ouid);

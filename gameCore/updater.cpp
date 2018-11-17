@@ -23,11 +23,11 @@ milliseconds Updater::getCurrentTime()
     );
 }
 
-void Updater::raiseEvent(int eventType, void* data)
+void Updater::raiseEvent(EventType eventType, void* data)
 {
-    if(Updater::events.count(eventType) > 0)
+    if(Updater::events.count((int)eventType) > 0)
     {
-        for(GameObject* obj : Updater::events[eventType])
+        for(GameObject* obj : Updater::events[(int)eventType])
         {
             obj->eventHandler({ eventType, data });
         }
@@ -36,6 +36,7 @@ void Updater::raiseEvent(int eventType, void* data)
 
 void Updater::tick()
 {
+    raiseEvent(EventType::Update, nullptr);
 
     glClearColor(0.4, 0.4, 0.4, 0.4);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -97,18 +98,18 @@ void Updater::registerInstance(GameObject* object)
     Updater::objects.push_back(object);
 }
 
-void Updater::subscibeEvent(int eventType, GameObject* object)
+void Updater::subscribeEvent(EventType eventType, GameObject* object)
 {
-    if(Updater::events.count(eventType) > 0)
+    if(Updater::events.count((int)eventType) > 0)
     {
-        events[eventType].push_back(object);
+        events[(int)eventType].push_back(object);
     } else
     {
         events.insert(std::pair<int,std::vector<GameObject*>>(
-            eventType,
+            (int)eventType,
             std::vector<GameObject*>()
         ));
-        events[eventType].push_back(object);
+        events[(int)eventType].push_back(object);
     }
 }
 

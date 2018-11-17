@@ -39,6 +39,9 @@
 		</Compiler>
 		<Unit filename="core/vector.cpp" />
 		<Unit filename="core/vector.h" />
+		<Unit filename="game/objectInclude.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="game/player.h" />
 		<Unit filename="gameCore/gameEvent.h" />
 		<Unit filename="gameCore/gameObject.cpp" />
