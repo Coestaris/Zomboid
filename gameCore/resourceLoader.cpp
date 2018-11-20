@@ -1,33 +1,40 @@
 #include "resourceLoader.h"
 
-//Taken from http://www.wischik.com/lu/programmer/get-image-size.html
+vector<TexCache> ResourceLoader::texCache;
+
+
 bool ResourceLoader::GetImageSize(const char *fn, int *x,int *y)
 {
-    FILE *f=fopen(fn,"rb");
+    FILE *f = fopen(fn,"rb");
 
-    if (f==0) return false;
+    if (f == 0) {
+        throw std::invalid_argument("unable to open file");
+    };
+
     fseek(f,0,SEEK_END);
 
     long len = ftell(f);
-    fseek(f,0,SEEK_SET);
+    fseek(f, 0, SEEK_SET);
 
-    if (len<24)
+    if (len < 24)
     {
         fclose(f);
         return false;
     }
 
-    unsigned char buf[24]; fread(buf,1,24,f);
+    unsigned char buf[24];
+    fread(buf, 1, 24, f);
 
-    if (buf[0]==0xFF && buf[1]==0xD8 && buf[2]==0xFF && buf[3]==0xE0 && buf[6]=='J' && buf[7]=='F' && buf[8]=='I' && buf[9]=='F')
+    if (buf[0] == 0xFF && buf[1] == 0xD8 && buf[2] == 0xFF && buf[3] == 0xE0 && buf[6] == 'J' && buf[7] == 'F' && buf[8] == 'I' && buf[9] == 'F')
     {
-        long pos=2;
-        while (buf[2]==0xFF)
+        long pos = 2;
+        while (buf[2] == 0xFF)
         {
-            if (buf[3]==0xC0 || buf[3]==0xC1 || buf[3]==0xC2 || buf[3]==0xC3 || buf[3]==0xC9 || buf[3]==0xCA || buf[3]==0xCB) break;
-            pos += 2+(buf[4]<<8)+buf[5];
-            if (pos+12>len) break;
-            fseek(f,pos,SEEK_SET); fread(buf+2,1,12,f);
+            if (buf[3] == 0xC0 || buf[3] == 0xC1 || buf[3] == 0xC2 || buf[3] == 0xC3 || buf[3] == 0xC9 || buf[3] == 0xCA || buf[3] == 0xCB) break;
+            pos += 2 + (buf[4] << 8) + buf[5];
+            if (pos + 12 > len) break;
+            fseek(f, pos, SEEK_SET);
+            fread(buf + 2, 1, 12, f);
         }
     }
     fclose(f);
@@ -64,10 +71,14 @@ bool ResourceLoader::GetImageSize(const char *fn, int *x,int *y)
     return false;
 }
 
-Texture2D * ResourceLoader::loadTexture(const char * path){
+Texture2D * ResourceLoader::loadTexture(std::string path){
+
+    if(!Utils::fileExists(path)) {
+        throw std::invalid_argument(path + " file not exist");
+    }
 
     int w, h;
-    if(!ResourceLoader::GetImageSize(path, &w, &h)) {
+    if(!ResourceLoader::GetImageSize(path.c_str(), &w, &h)) {
         //puts("Unable to get image size");
         w = -1;
         h = -1;
@@ -75,12 +86,92 @@ Texture2D * ResourceLoader::loadTexture(const char * path){
 
 	GLuint id = SOIL_load_OGL_texture
 	(
-		path,
+		path.c_str(),
 		SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID,
 		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
 	);
 
+	printf("Loaded texture \"%s\". W: %i, H: %i OGlID: %li\n",
+        path.c_str(), w, h, id);
+
 	return new Texture2D(id, w, h);
 }
+
+void ResourceLoader::freeTexure(Texture2D* tex) {
+    tex->Destroy();
+    delete tex;
+}
+
+void ResourceLoader::init()
+{
+    ResourceLoader::texCache = vector<TexCache> ();
+}
+
+Texture2D* ResourceLoader::GetTexure(int identifier)
+{
+    for(int i = 0; i < ResourceLoader::texCache.size(); i++) {
+        if(ResourceLoader::texCache[i].identifier == identifier) {
+            return ResourceLoader::texCache[i].tex;
+        }
+    }
+
+    return invalid_argument("Unable to find specified texture");
+}
+
+bool ResourceLoader::hasCached(int identifier)
+{
+    for(int i = 0; i < ResourceLoader::texCache.size(); i++) {
+        if(ResourceLoader::texCache[i].identifier == identifier) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+void ResourceLoader::CacheTexures(vector<TexCache> data)
+{
+    for(TexCache tc : data) {
+        if(!ResourceLoader::hasCached(tc.identifier)) {
+            ResourceLoader.texCache.push_back(
+                {
+                    tc.path,
+                    tc.identifier,
+                    tc.scope,
+                    ResourceLoader::loadTexture(tc.path)
+                }
+            );
+        }
+    }
+}
+
+void ResourceLoader::ClearCache(int scope)
+{
+    for(int i = ResourceLoader::texCache.size(); i >= 0 ; i--) {
+        if(ResourceLoader::texCache[i].scope == scope) {
+            ResourceLoader::texCache.erase(
+                ResourceLoader::texCache.begin() + i
+            );
+        }
+    }
+}
+
+void ResourceLoader::ClearCache(int identifier)
+{
+    for(int i = ResourceLoader::texCache.size(); i >= 0 ; i--) {
+        if(ResourceLoader::texCache[i].identifier == identifier) {
+            ResourceLoader::texCache.erase(
+                ResourceLoader::texCache.begin() + i
+            );
+            return;
+        }
+    }
+}
+
+void ResourceLoader::ClearCache(vector<int> identifiers)
+{
+//TODO!
+}
+
 

@@ -4,7 +4,7 @@ void EventHandler::initGraphics(std::string title, Vector2i winSize, Vector2i wi
 {
     const char* c_title = title.c_str();
 
-    glutInitDisplayMode(GLUT_SINGLE);
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA | GLUT_DEPTH);
     glutInitWindowSize(winSize.x, winSize.x);
     glutInitWindowPosition(winPos.x, winPos.y);
     glutCreateWindow(c_title);
@@ -16,6 +16,14 @@ void EventHandler::initGraphics(std::string title, Vector2i winSize, Vector2i wi
     glMatrixMode(GL_MODELVIEW);
 }
 
+void reshape(int _width, int _height) {
+    glViewport(0, 0, _width, _height);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(0, _width, 0, _height, 0, 1);
+    glMatrixMode(GL_MODELVIEW);
+}
+
 void EventHandler::initEvents()
 {
     glutIgnoreKeyRepeat(1);
@@ -24,6 +32,7 @@ void EventHandler::initEvents()
     glutMotionFunc(EventHandler::eventMouseMove);
     glutPassiveMotionFunc(EventHandler::eventMouseMove);
     glutMouseFunc(EventHandler::eventMouseClick);
+    glutReshapeFunc(reshape);
 
     glutEntryFunc(EventHandler::eventMouseEntry);
     glutKeyboardFunc(EventHandler::eventCharKeyDown);
@@ -133,15 +142,24 @@ void EventHandler::eventMouseEntry(int state)
     delete med;
 }
 
+float angle = 0;
+#include <math.h>
+
 void EventHandler::loop()
 {
     Updater::tickBegin();
 
-    Updater::tick();
+    glClearColor(0.4, 0.4, 0.4, 0);
+    glClear(GL_COLOR_BUFFER_BIT);
+    //Updater::tick();
     //Updater::redraw();
     //DrawImage();
-    glClearColor(0, 0, 0, 0);
-    Renderer::DrawTexture(tex, Vector2f(10, 30), 0.0);
+    //glClearColor(0, 0, 0, 0);
+    //glClear(0);
+
+    Renderer::DrawTexture(tex, Vector2f(0, 0), angle += 0.1, 2);
+
+    Renderer::DrawTexture(tex, Vector2f(sin(angle) * 100, 100), angle / 2, 1);
     glFlush();
 
     Updater::tickEnd();

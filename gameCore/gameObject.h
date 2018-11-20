@@ -7,17 +7,12 @@
 
 #include "gameEvent.h"
 
-typedef struct {
-} resource;
-
 typedef long ouid_t;
 
 class GameObject
 {
 
 protected:
-    void loadResource(resource res);
-
     virtual void onLoad() {}
     virtual void onCreate() {}
 
@@ -28,11 +23,6 @@ public:
 
     virtual void eventHandler(GameEvent event) {}
     virtual void draw() {}
-};
-
-class DrawableObject : public GameObject
-{
-
 };
 
 #endif // GAMEOBJECT_H_INCLUDED

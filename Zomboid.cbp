@@ -5,6 +5,7 @@
 		<Option title="Zomboid" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
+		<Option virtualFolders="gameCore/;" />
 		<Build>
 			<Target title="Debug">
 				<Option output="bin/Debug/Zomboid" prefix_auto="1" extension_auto="1" />
@@ -39,12 +40,18 @@
 			<Add option="-Wall" />
 		</Compiler>
 		<Unit filename="core/texture2d.h">
-			<Option target="&lt;{~None~}&gt;" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="core/utils.cpp">
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="core/utils.h">
+			<Option target="Debug" />
 		</Unit>
 		<Unit filename="core/vector.cpp" />
 		<Unit filename="core/vector.h" />
 		<Unit filename="game/objectInclude.h">
-			<Option target="&lt;{~None~}&gt;" />
+			<Option target="Debug" />
 		</Unit>
 		<Unit filename="game/player.h" />
 		<Unit filename="gameCore/eventHandler.cpp" />
@@ -52,11 +59,15 @@
 		<Unit filename="gameCore/gameEvent.h" />
 		<Unit filename="gameCore/gameObject.cpp" />
 		<Unit filename="gameCore/gameObject.h" />
+		<Unit filename="gameCore/renderer.cpp" />
+		<Unit filename="gameCore/renderer.h" />
 		<Unit filename="gameCore/resourceLoader.cpp" />
 		<Unit filename="gameCore/resourceLoader.h" />
 		<Unit filename="gameCore/updater.cpp" />
 		<Unit filename="gameCore/updater.h" />
-		<Unit filename="main.cpp" />
+		<Unit filename="main.cpp">
+			<Option virtualFolder="gameCore/" />
+		</Unit>
 		<Unit filename="main.h" />
 		<Extensions>
 			<code_completion />

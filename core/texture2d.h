@@ -9,14 +9,17 @@ public:
 	Texture2D(GLuint id, int width, int height)
     {
            textureId = id;
-           width = width;
-           height = height;
+           this->width = width;
+           this->height = height;
+    }
+
+    void destroy() {
+        glDeleteTextures(1, ((GLuint*)&textureId));
     }
 
 	~Texture2D(void)
     {
-
-         glDeleteTextures(1, ((GLuint*)&textureId));
+        destroy();
     }
 
 	GLuint textureId;
