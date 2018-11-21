@@ -8,6 +8,7 @@
 #include "GL/gl.h"
 
 #include "../core/vector.h"
+#include "resourceLoader.h"
 #include "updater.h"
 
 class EventHandler

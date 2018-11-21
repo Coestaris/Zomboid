@@ -2,3 +2,7 @@
 *.depend
 *.layout
 bin/Debug/
+
+src/Zomboid/bin/Debug/
+
+src/ZomboidLib/bin/Debug/

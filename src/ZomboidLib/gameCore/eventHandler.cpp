@@ -47,22 +47,12 @@ void EventHandler::runGame()
     glutMainLoop();
 }
 
-#include "../game/player.h"
-#include "resourceLoader.h"
-#include "renderer.h"
-
-Texture2D* tex;
-
 void EventHandler::init(int argc, char **argv, Vector2i winSize, Vector2i winPos, std::string title)
 {
-    Player* player = new Player();
-    Updater::registerInstance((GameObject*)player);
-    player->onLoad();
     glutInit(&argc, argv);
+    ResourceLoader::init();
     EventHandler::initGraphics(title, winSize, winPos);
     EventHandler::initEvents();
-
-    tex = ResourceLoader::loadTexture("input.png");
 }
 
 void EventHandler::eventKeyDown(int key, int x, int y)
@@ -149,18 +139,12 @@ void EventHandler::loop()
 {
     Updater::tickBegin();
 
-    glClearColor(0.4, 0.4, 0.4, 0);
+    glClearColor(0, 0, 0, 0);
     glClear(GL_COLOR_BUFFER_BIT);
-    //Updater::tick();
-    //Updater::redraw();
-    //DrawImage();
-    //glClearColor(0, 0, 0, 0);
-    //glClear(0);
 
-    Renderer::DrawTexture(tex, Vector2f(0, 0), angle += 0.1, 2);
+    Updater::tick();
+    Updater::redraw();
 
-    Renderer::DrawTexture(tex, Vector2f(sin(angle) * 100, 100), angle / 2, 1);
     glFlush();
-
     Updater::tickEnd();
 }

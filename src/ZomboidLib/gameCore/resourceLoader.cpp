@@ -1,6 +1,6 @@
 #include "resourceLoader.h"
 
-vector<TexCache> ResourceLoader::texCache;
+std::vector<TexCache> ResourceLoader::texCache;
 
 
 bool ResourceLoader::GetImageSize(const char *fn, int *x,int *y)
@@ -99,13 +99,13 @@ Texture2D * ResourceLoader::loadTexture(std::string path){
 }
 
 void ResourceLoader::freeTexure(Texture2D* tex) {
-    tex->Destroy();
+    tex->destroy();
     delete tex;
 }
 
 void ResourceLoader::init()
 {
-    ResourceLoader::texCache = vector<TexCache> ();
+    ResourceLoader::texCache = std::vector<TexCache> ();
 }
 
 Texture2D* ResourceLoader::GetTexure(int identifier)
@@ -116,7 +116,7 @@ Texture2D* ResourceLoader::GetTexure(int identifier)
         }
     }
 
-    return invalid_argument("Unable to find specified texture");
+    throw std::invalid_argument("Unable to find specified texture");
 }
 
 bool ResourceLoader::hasCached(int identifier)
@@ -130,11 +130,11 @@ bool ResourceLoader::hasCached(int identifier)
     return false;
 }
 
-void ResourceLoader::CacheTexures(vector<TexCache> data)
+void ResourceLoader::CacheTexures(std::vector<TexCache> data)
 {
     for(TexCache tc : data) {
         if(!ResourceLoader::hasCached(tc.identifier)) {
-            ResourceLoader.texCache.push_back(
+            ResourceLoader::texCache.push_back(
                 {
                     tc.path,
                     tc.identifier,
@@ -146,7 +146,7 @@ void ResourceLoader::CacheTexures(vector<TexCache> data)
     }
 }
 
-void ResourceLoader::ClearCache(int scope)
+void ResourceLoader::ClearCacheByScope(int scope)
 {
     for(int i = ResourceLoader::texCache.size(); i >= 0 ; i--) {
         if(ResourceLoader::texCache[i].scope == scope) {
@@ -157,7 +157,7 @@ void ResourceLoader::ClearCache(int scope)
     }
 }
 
-void ResourceLoader::ClearCache(int identifier)
+void ResourceLoader::ClearCacheById(int identifier)
 {
     for(int i = ResourceLoader::texCache.size(); i >= 0 ; i--) {
         if(ResourceLoader::texCache[i].identifier == identifier) {
@@ -169,7 +169,7 @@ void ResourceLoader::ClearCache(int identifier)
     }
 }
 
-void ResourceLoader::ClearCache(vector<int> identifiers)
+void ResourceLoader::ClearCache(std::vector<int> identifiers)
 {
 //TODO!
 }

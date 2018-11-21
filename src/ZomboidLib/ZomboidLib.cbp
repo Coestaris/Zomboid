@@ -8,15 +8,23 @@
 		<Build>
 			<Target title="Debug">
 				<Option output="bin/Debug/ZomboidLib" prefix_auto="1" extension_auto="1" />
-				<Option working_dir="" />
+				<Option working_dir="bin/Debug" />
 				<Option object_output="obj/Debug/" />
-				<Option type="2" />
+				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
 				<Compiler>
 					<Add option="-Wall" />
 					<Add option="-g" />
+					<Add option="-fPIC" />
 				</Compiler>
+				<Linker>
+					<Add option="-fPIC" />
+					<Add library="libGL" />
+					<Add library="libGLU" />
+					<Add library="libglut" />
+					<Add library="libSOIL" />
+				</Linker>
 			</Target>
 			<Target title="Release">
 				<Option output="bin/Release/ZomboidLib" prefix_auto="1" extension_auto="1" />
@@ -34,9 +42,24 @@
 				</Linker>
 			</Target>
 		</Build>
-		<Unit filename="main.c">
-			<Option compilerVar="CC" />
-		</Unit>
+		<Unit filename="core/texture2d.h" />
+		<Unit filename="core/utils.cpp" />
+		<Unit filename="core/utils.h" />
+		<Unit filename="core/vector.cpp" />
+		<Unit filename="core/vector.h" />
+		<Unit filename="gameCore/drawable.h" />
+		<Unit filename="gameCore/eventHandler.cpp" />
+		<Unit filename="gameCore/eventHandler.h" />
+		<Unit filename="gameCore/gameEvent.h" />
+		<Unit filename="gameCore/gameObject.cpp" />
+		<Unit filename="gameCore/gameObject.h" />
+		<Unit filename="gameCore/objectInclude.h" />
+		<Unit filename="gameCore/renderer.cpp" />
+		<Unit filename="gameCore/renderer.h" />
+		<Unit filename="gameCore/resourceLoader.cpp" />
+		<Unit filename="gameCore/resourceLoader.h" />
+		<Unit filename="gameCore/updater.cpp" />
+		<Unit filename="gameCore/updater.h" />
 		<Extensions>
 			<envvars />
 			<code_completion />

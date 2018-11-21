@@ -1,12 +1,10 @@
 #ifndef MAIN_H_INCLUDED
 #define MAIN_H_INCLUDED
 
-#include "core/vector.h"
+#include "../ZomboidLib/core/vector.h"
 
-#include "game/player.h"
-
-#include "gameCore/eventHandler.h"
-#include "gameCore/updater.h"
+#include "../ZomboidLib/gameCore/eventHandler.h"
+#include "../ZomboidLib/gameCore/updater.h"
 
 #include <stdio.h>
 

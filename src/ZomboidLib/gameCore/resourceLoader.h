@@ -22,7 +22,7 @@ class ResourceLoader
 {
 
 private:
-    static vector<TexCache> texCache;
+    static std::vector<TexCache> texCache;
 
     static Texture2D* loadTexture(std::string path);
     static bool GetImageSize(const char *fn, int *x,int *y);
@@ -30,16 +30,16 @@ private:
 public:
     static void init();
 
-    static bool hasCached(int identifier)
+    static bool hasCached(int identifier);
 
     static void freeTexure(Texture2D* tex);
 
     static Texture2D* GetTexure(int identifier);
-    static void CacheTexures(vector<TexCache> data);
+    static void CacheTexures(std::vector<TexCache> data);
 
-    static void ClearCache(int scope);
-    static void ClearCache(int identifier);
-    static void ClearCache(vector<int> identifiers);
+    static void ClearCacheByScope(int scope);
+    static void ClearCacheById(int identifier);
+    static void ClearCache(std::vector<int> identifiers);
 };
 
 

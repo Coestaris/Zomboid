@@ -2,6 +2,8 @@
 <CodeBlocks_workspace_file>
 	<Workspace title="Workspace">
 		<Project filename="src/ZomboidLib/ZomboidLib.cbp" />
-		<Project filename="src/Zomboid/Zomboid.cbp" />
+		<Project filename="src/Zomboid/Zomboid.cbp">
+			<Depends filename="src/ZomboidLib/ZomboidLib.cbp" />
+		</Project>
 	</Workspace>
 </CodeBlocks_workspace_file>
