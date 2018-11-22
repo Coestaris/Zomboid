@@ -1,7 +1,7 @@
 #include "resourceLoader.h"
 
 std::vector<TexCache> ResourceLoader::texCache;
-
+std::vector<GameScene*> ResourceLoader::scenes;
 
 bool ResourceLoader::GetImageSize(const char *fn, int *x,int *y)
 {
@@ -112,7 +112,11 @@ Texture2D* ResourceLoader::GetTexure(int identifier)
 {
     for(int i = 0; i < ResourceLoader::texCache.size(); i++) {
         if(ResourceLoader::texCache[i].identifier == identifier) {
-            return ResourceLoader::texCache[i].tex;
+            if(ResourceLoader::texCache[i].tex != nullptr) {
+                return ResourceLoader::texCache[i].tex;
+            } else {
+                throw std::invalid_argument("Texture has been cached, but its still not loaded");
+            }
         }
     }
 
@@ -139,7 +143,8 @@ void ResourceLoader::CacheTexures(std::vector<TexCache> data)
                     tc.path,
                     tc.identifier,
                     tc.scope,
-                    ResourceLoader::loadTexture(tc.path)
+                    tc.loadTex ? ResourceLoader::loadTexture(tc.path) : nullptr,
+                    tc.loadTex
                 }
             );
         }
@@ -169,9 +174,61 @@ void ResourceLoader::ClearCacheById(int identifier)
     }
 }
 
+void ResourceLoader::unloadScope(int scope)
+{
+    for(int i = ResourceLoader::texCache.size(); i >= 0 ; i--) {
+        if(ResourceLoader::texCache[i].scope == scope) {
+            if(ResourceLoader::texCache[i].tex == nullptr) {
+                ResourceLoader::texCache[i].tex->destroy();
+                delete ResourceLoader::texCache[i].tex;
+                ResourceLoader::texCache[i].tex = nullptr;
+            }
+        }
+    }
+}
+
+void ResourceLoader::loadScope(int scope)
+{
+    for(int i = ResourceLoader::texCache.size(); i >= 0 ; i--) {
+        if(ResourceLoader::texCache[i].scope == scope) {
+            if(ResourceLoader::texCache[i].tex == nullptr) {
+                ResourceLoader::texCache[i].tex = ResourceLoader::loadTexture(
+                    ResourceLoader::texCache[i].path
+                );
+            }
+        }
+    }
+}
+
 void ResourceLoader::ClearCache(std::vector<int> identifiers)
 {
 //TODO!
 }
 
+GameScene* ResourceLoader::getScene(int identifier)
+{
+    for(int i = 0; i < ResourceLoader::scenes.size(); i++) {
+        if(ResourceLoader::scenes[i]->uid == identifier) {
+            return ResourceLoader::scenes[i];
+        }
+    }
+    throw std::invalid_argument("Unable to find specified scene");
+}
+
+void ResourceLoader::pushScene(GameScene* scene)
+{
+    for(int i = 0; i < ResourceLoader::scenes.size(); i++) {
+        if(ResourceLoader::scenes[i]->uid == scene->uid) {
+            throw std::invalid_argument("Same scene has already loaded");
+        }
+    }
+
+    ResourceLoader::scenes.push_back(scene);
+
+    std::vector<TexCache> cache;
+    scene->startUpObjects = std::vector<GameObject*>();
+
+    scene->onLoad(&cache, &scene->startUpObjects, &scene->scope);
+    ResourceLoader::CacheTexures(cache);
+}
 

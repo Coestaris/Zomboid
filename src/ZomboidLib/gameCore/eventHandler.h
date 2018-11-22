@@ -9,6 +9,7 @@
 
 #include "../core/vector.h"
 #include "resourceLoader.h"
+#include "gameScene.h"
 #include "updater.h"
 
 class EventHandler
@@ -22,14 +23,14 @@ private:
     static void eventMouseClick(int button, int state, int x, int y);
     static void eventMouseMove(int x, int y);
     static void eventMouseEntry(int state);
-
+    static void ReshapeFunc(int _width, int _height);
 
     static void initGraphics(std::string title, Vector2i winSize, Vector2i winPos);
     static void initEvents();
 
 public:
     static void init(int argc, char **argv, Vector2i winSize, Vector2i winPos, std::string title);
-    static void runGame();
+    static void runGame(GameScene* mainScene);
 };
 
 

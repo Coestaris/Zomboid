@@ -3,8 +3,13 @@
 
 #include <iostream>
 
-#include "../gameCore/gameObject.h"
-#include "../gameCore/updater.h"
-#include "../gameCore/gameEvent.h"
+#include "../core/texture2d.h"
+#include "../core/vector.h"
+
+#include "gameObject.h"
+#include "updater.h"
+#include "gameEvent.h"
+#include "gameScene.h"
+#include "resourceLoader.h"
 
 #endif // OBJECTINCLUDE_H_INCLUDED

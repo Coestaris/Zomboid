@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_workspace_file>
 	<Workspace title="Workspace">
-		<Project filename="src/ZomboidLib/ZomboidLib.cbp" />
 		<Project filename="src/Zomboid/Zomboid.cbp">
 			<Depends filename="src/ZomboidLib/ZomboidLib.cbp" />
 		</Project>
+		<Project filename="src/ZomboidLib/ZomboidLib.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>

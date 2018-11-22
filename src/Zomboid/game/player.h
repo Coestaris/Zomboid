@@ -1,7 +1,7 @@
 #ifndef PLAYER_H_INCLUDED
 #define PLAYER_H_INCLUDED
 
-#include "objectInclude.h"
+#include "../../ZomboidLib/core/vector.h"
 
 class Player : public GameObject
 {

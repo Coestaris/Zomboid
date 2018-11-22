@@ -16,7 +16,7 @@ void EventHandler::initGraphics(std::string title, Vector2i winSize, Vector2i wi
     glMatrixMode(GL_MODELVIEW);
 }
 
-void reshape(int _width, int _height) {
+void EventHandler::ReshapeFunc(int _width, int _height) {
     glViewport(0, 0, _width, _height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -32,7 +32,7 @@ void EventHandler::initEvents()
     glutMotionFunc(EventHandler::eventMouseMove);
     glutPassiveMotionFunc(EventHandler::eventMouseMove);
     glutMouseFunc(EventHandler::eventMouseClick);
-    glutReshapeFunc(reshape);
+    glutReshapeFunc(EventHandler::ReshapeFunc);
 
     glutEntryFunc(EventHandler::eventMouseEntry);
     glutKeyboardFunc(EventHandler::eventCharKeyDown);
@@ -42,7 +42,7 @@ void EventHandler::initEvents()
     glutDisplayFunc(EventHandler::loop);
 }
 
-void EventHandler::runGame()
+void EventHandler::runGame(GameScene* mainScene)
 {
     glutMainLoop();
 }
@@ -138,9 +138,6 @@ float angle = 0;
 void EventHandler::loop()
 {
     Updater::tickBegin();
-
-    glClearColor(0, 0, 0, 0);
-    glClear(GL_COLOR_BUFFER_BIT);
 
     Updater::tick();
     Updater::redraw();

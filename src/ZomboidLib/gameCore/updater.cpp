@@ -2,6 +2,7 @@
 
 std::vector<GameObject*> Updater::objects;
 std::map<int, std::vector<GameObject*>> Updater::events;
+GameScene* Updater::currentScene;
 
 milliseconds Updater::tickStartTime;
 
@@ -34,27 +35,26 @@ void Updater::raiseEvent(EventType eventType, void* data)
     }
 }
 
+void Updater::loadScene(int scene)
+{
+    bool b = false;
+    Updater::currentScene->onExit(&b);
+    if(b) {
+        for(int i = 0; i < Updater::objects.size(); i++) {
+            Updater::objects[i]->onDestroy();
+            delete Updater::objects[i];
+        }
+        Updater::objects.clear();
+    }
+
+    Updater::currentScene = ResourceLoader::getScene(scene);
+    Updater::currentScene->onEnter();
+}
+
 void Updater::tick()
 {
-    raiseEvent(EventType::Update, nullptr);
+    //currentScene->
 
-    glClearColor(0.4, 0.4, 0.4, 0.4);
-    glClear(GL_COLOR_BUFFER_BIT);
-
-    glColor3f(1.0, 1.0, 1.0);
-    glOrtho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
-
-        glBegin(GL_TRIANGLES);
-                glColor3f(0, 0, 0.1);
-                glVertex3f(-0.7, 0.7, 0);
-
-                glColor3f(0, 0, 1);
-                glVertex3f(0.7, 0.7, 0);
-
-                glColor3f(1, 1, 0.0);
-                glVertex3f(0, -1, 0);
-        glEnd();
-    glFlush();
 }
 
 void Updater::tickBegin()
@@ -115,7 +115,9 @@ void Updater::subscribeEvent(EventType eventType, GameObject* object)
 
 void Updater::redraw()
 {
+    Renderer::ClearScreen();
     for (GameObject* object : Updater::objects) {
         object->draw();
     }
+    Renderer::FlushScreen();
 }

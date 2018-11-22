@@ -20,6 +20,7 @@ public:
     ouid_t ouid;
 
     void destroyInstance();
+    virtual void onDestroy();
 
     virtual void eventHandler(GameEvent event) {}
     virtual void draw() {}

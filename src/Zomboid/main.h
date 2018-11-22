@@ -8,4 +8,6 @@
 
 #include <stdio.h>
 
+#include "game/scenes/mainScene.h"
+
 #endif // MAIN_H_INCLUDED

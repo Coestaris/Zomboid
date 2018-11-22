@@ -13,6 +13,8 @@ private:
 
 public:
     static void DrawTexture(Texture2D* tex, Vector2f position, double angle, double scaleFactor = 1);
+    static void ClearScreen();
+    static void FlushScreen();
 };
 
 #endif // RENDERER_H_INCLUDED

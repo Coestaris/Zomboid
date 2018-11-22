@@ -9,20 +9,16 @@
 
 #include "../core/utils.h"
 #include "../core/texture2d.h"
+#include "../core/texCache.h"
 
-typedef struct {
-    std::string path;
-    int identifier;
-    int scope;
-    Texture2D* tex;
-
-} TexCache;
+#include "gameScene.h"
 
 class ResourceLoader
 {
 
 private:
     static std::vector<TexCache> texCache;
+    static std::vector<GameScene*> scenes;
 
     static Texture2D* loadTexture(std::string path);
     static bool GetImageSize(const char *fn, int *x,int *y);
@@ -40,6 +36,12 @@ public:
     static void ClearCacheByScope(int scope);
     static void ClearCacheById(int identifier);
     static void ClearCache(std::vector<int> identifiers);
+
+    static void loadScope(int scope);
+    static void unloadScope(int scope);
+
+    static void pushScene(GameScene* scene);
+    static GameScene* getScene(int identifier);
 };
 
 

@@ -40,3 +40,14 @@ void Renderer::DrawTexture(Texture2D* tex, Vector2f position, double angle, doub
 
     glPopMatrix();
 }
+
+void Renderer::ClearScreen()
+{
+    glClearColor(0, 0, 0, 0);
+    glClear(GL_COLOR_BUFFER_BIT);
+}
+
+void Renderer::FlushScreen()
+{
+    glFlush();
+}

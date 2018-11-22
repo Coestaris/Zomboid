@@ -7,9 +7,9 @@
 #include <iostream>
 #include <map>
 
-#include "GL/gl.h"
-
+#include "gameScene.h"
 #include "gameObject.h"
+#include "renderer.h"
 
 #define CALCULATE_FPS
 #define FPS_TO_LOCK 60
@@ -34,6 +34,8 @@ private:
     static milliseconds delayCounter;
     #endif // CALCULATE_FPS
 
+    static GameScene* currentScene;
+
 public:
     static void raiseEvent(EventType eventType, void* data);
 
@@ -51,6 +53,8 @@ public:
     static void destroyInstance(ouid_t ouid);
 
     static bool Running;
+
+    static void loadScene(int scene);
 
     #ifdef CALCULATE_FPS
     static double FPS;
