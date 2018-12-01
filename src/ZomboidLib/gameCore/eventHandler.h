@@ -30,7 +30,7 @@ private:
 
 public:
     static void init(int argc, char **argv, Vector2i winSize, Vector2i winPos, std::string title);
-    static void runGame(GameScene* mainScene);
+    static void runGame(int sceneIndex);
 };
 
 

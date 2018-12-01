@@ -42,8 +42,9 @@ void EventHandler::initEvents()
     glutDisplayFunc(EventHandler::loop);
 }
 
-void EventHandler::runGame(GameScene* mainScene)
+void EventHandler::runGame(int sceneIndex)
 {
+    Updater::loadScene(sceneIndex);
     glutMainLoop();
 }
 

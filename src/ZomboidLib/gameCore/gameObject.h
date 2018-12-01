@@ -19,11 +19,14 @@ protected:
 public:
     ouid_t ouid;
 
-    void destroyInstance();
-    virtual void onDestroy();
+    void destroyInstance() {}
+    virtual void onDestroy() {}
 
     virtual void eventHandler(GameEvent event) {}
     virtual void draw() {}
+
+    ~GameObject() {}
+    GameObject() {}
 };
 
 #endif // GAMEOBJECT_H_INCLUDED

@@ -2,9 +2,29 @@
 
 std::vector<GameObject*> Updater::objects;
 std::map<int, std::vector<GameObject*>> Updater::events;
-GameScene* Updater::currentScene;
+GameScene* Updater::currentScene = (GameScene*)3;
 
 milliseconds Updater::tickStartTime;
+
+    /*if((long)Updater::currentScene != 3) {
+
+        bool removeAll = false;
+        bool unloadScope = false;
+
+        Updater::currentScene->onExit(&removeAll, &unloadScope);
+        if(removeAll) {
+            for(unsigned int i = 0; i < Updater::objects.size(); i++) {
+                Updater::objects[i]->onDestroy();
+                delete Updater::objects[i];
+            }
+            Updater::objects.clear();
+        }
+
+        if(unloadScope) {
+            ResourceLoader::unloadScope(Updater::currentScene->scope);
+        }
+    }
+*/
 
 #ifdef CALCULATE_FPS
 double Updater::FPS;
@@ -34,21 +54,28 @@ void Updater::raiseEvent(EventType eventType, void* data)
         }
     }
 }
+/*
+    Updater::currentScene = ResourceLoader::getScene(scene);
+
+    bool loadScope = false;
+    Updater::currentScene->onEnter(&loadScope);
+
+    if(loadScope) {
+        ResourceLoader::loadScope(Updater::currentScene->scope);
+    }*/
 
 void Updater::loadScene(int scene)
 {
-    bool b = false;
-    Updater::currentScene->onExit(&b);
-    if(b) {
-        for(int i = 0; i < Updater::objects.size(); i++) {
-            Updater::objects[i]->onDestroy();
-            delete Updater::objects[i];
-        }
-        Updater::objects.clear();
-    }
+    puts("hello!");
 
     Updater::currentScene = ResourceLoader::getScene(scene);
-    Updater::currentScene->onEnter();
+
+    bool loadScope = false;
+    Updater::currentScene->onEnter(&loadScope);
+
+    if(loadScope) {
+        ResourceLoader::loadScope(Updater::currentScene->scope);
+    }
 }
 
 void Updater::tick()

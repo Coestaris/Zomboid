@@ -106,11 +106,12 @@ void ResourceLoader::freeTexure(Texture2D* tex) {
 void ResourceLoader::init()
 {
     ResourceLoader::texCache = std::vector<TexCache> ();
+    ResourceLoader::scenes = std::vector<GameScene*>();
 }
 
 Texture2D* ResourceLoader::GetTexure(int identifier)
 {
-    for(int i = 0; i < ResourceLoader::texCache.size(); i++) {
+    for(unsigned int i = 0; i < ResourceLoader::texCache.size(); i++) {
         if(ResourceLoader::texCache[i].identifier == identifier) {
             if(ResourceLoader::texCache[i].tex != nullptr) {
                 return ResourceLoader::texCache[i].tex;
@@ -125,7 +126,7 @@ Texture2D* ResourceLoader::GetTexure(int identifier)
 
 bool ResourceLoader::hasCached(int identifier)
 {
-    for(int i = 0; i < ResourceLoader::texCache.size(); i++) {
+    for(unsigned int  i = 0; i < ResourceLoader::texCache.size(); i++) {
         if(ResourceLoader::texCache[i].identifier == identifier) {
             return true;
         }
@@ -189,7 +190,7 @@ void ResourceLoader::unloadScope(int scope)
 
 void ResourceLoader::loadScope(int scope)
 {
-    for(int i = ResourceLoader::texCache.size(); i >= 0 ; i--) {
+    for(unsigned int i = 0; i < ResourceLoader::texCache.size(); i++) {
         if(ResourceLoader::texCache[i].scope == scope) {
             if(ResourceLoader::texCache[i].tex == nullptr) {
                 ResourceLoader::texCache[i].tex = ResourceLoader::loadTexture(
@@ -207,7 +208,7 @@ void ResourceLoader::ClearCache(std::vector<int> identifiers)
 
 GameScene* ResourceLoader::getScene(int identifier)
 {
-    for(int i = 0; i < ResourceLoader::scenes.size(); i++) {
+    for(unsigned int  i = 0; i < ResourceLoader::scenes.size(); i++) {
         if(ResourceLoader::scenes[i]->uid == identifier) {
             return ResourceLoader::scenes[i];
         }
@@ -217,18 +218,11 @@ GameScene* ResourceLoader::getScene(int identifier)
 
 void ResourceLoader::pushScene(GameScene* scene)
 {
-    for(int i = 0; i < ResourceLoader::scenes.size(); i++) {
-        if(ResourceLoader::scenes[i]->uid == scene->uid) {
-            throw std::invalid_argument("Same scene has already loaded");
-        }
-    }
 
-    ResourceLoader::scenes.push_back(scene);
+    //std::vector<TexCache> cache;
+    //scene->startUpObjects = std::vector<GameObject*>();
 
-    std::vector<TexCache> cache;
-    scene->startUpObjects = std::vector<GameObject*>();
-
-    scene->onLoad(&cache, &scene->startUpObjects, &scene->scope);
-    ResourceLoader::CacheTexures(cache);
+    //scene->onLoad(&cache, &scene->startUpObjects, &scene->scope);
+    //ResourceLoader::CacheTexures(cache);
 }
 

@@ -1,4 +1,4 @@
-    /*glClearColor(0.4, 0.4, 0.4, 0.4);
+        /*glClearColor(0.4, 0.4, 0.4, 0.4);
     glClear(GL_COLOR_BUFFER_BIT);
 
     glColor3f(1.0, 1.0, 1.0);

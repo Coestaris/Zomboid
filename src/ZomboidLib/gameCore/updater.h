@@ -10,6 +10,7 @@
 #include "gameScene.h"
 #include "gameObject.h"
 #include "renderer.h"
+#include "resourceLoader.h"
 
 #define CALCULATE_FPS
 #define FPS_TO_LOCK 60

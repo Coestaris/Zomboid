@@ -16,7 +16,7 @@
 class ResourceLoader
 {
 
-private:
+public:
     static std::vector<TexCache> texCache;
     static std::vector<GameScene*> scenes;
 

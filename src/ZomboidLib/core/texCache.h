@@ -19,7 +19,16 @@ public:
         this->path = path;
         this->loadTex = load;
         this->identifier = identifier;
-        this->scope;
+        this->scope = scope;
+    }
+
+    TexCache(std::string path, int id, int scope, Texture2D* tex, bool loadTex)
+    {
+        this->path = path;
+        this->identifier = id;
+        this->scope = scope;
+        this->tex = tex;
+        this->loadTex = loadTex;
     }
 };
 
